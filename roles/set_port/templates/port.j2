@@ -1,0 +1,27 @@
+{
+    "infraHPathS": {
+        "attributes": {
+            "descr": "{{ port.description | mandatory }}"
+        },
+        "children": [
+            {
+                "infraRsHPathAtt": {
+                    "attributes": {
+                        "tDn": "topology/pod-{{ port.pod|default(1) }}/paths-{{ port.leaf|mandatory }}{{ fex | ternary('/extpaths-'~fex, '') }}/pathep-[eth{{ port.module|mandatory }}/{{ port.port|mandatory }}]"
+                    }
+                }
+            }
+            {% if port.policy_group is defined %}
+            ,
+            {
+                "infraRsPathToAccBaseGrp": {
+                    "attributes": {
+                        "tDn": "uni/infra/funcprof/accportgrp-{{ port.policy_group }}"
+                    }
+                }
+            }
+            {% endif %}
+            
+        ]
+    }
+}

@@ -1,0 +1,12 @@
+#Common Role
+
+---
+
+- name: create tenant ansible-test
+  aci_tenant:
+    name: ansible-test
+    descr: ansible test tenant
+    username: "{{ username }}"
+    password: "{{ password }}"
+    hostname: "{{ inventory_hostname }}"
+    validate_certs: no

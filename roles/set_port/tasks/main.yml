@@ -1,0 +1,8 @@
+# set_port role
+
+# expects var ports to be an array of dicts containing leaf, module, port, fex(opt) and description keys
+
+---
+  
+- include_tasks: set_one_port.yml port="{{ item }}"
+  with_items: "{{ ports }}"

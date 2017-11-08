@@ -1,0 +1,12 @@
+- set_fact:
+    fex: "{{ port.fex|default(false) }}"
+    
+- name: set port description via interface override
+  aci_rest:
+    username: "{{ username }}"
+    password: "{{ password }}"
+    hostname: "{{ inventory_hostname }}"
+    validate_certs: no
+    path: "/api/mo/uni/infra/hpaths-leaf-{{ port.leaf }}-{{ fex | ternary('f'~fex~'-','') }}e-{{ port.module }}-{{ port.port }}-intOvrd.json"
+    method: post
+    content: "{{ lookup('template', 'port.j2') }}"
