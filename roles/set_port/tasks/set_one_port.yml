@@ -1,7 +1,7 @@
 - set_fact:
     fex: "{{ port.fex|default(false) }}"
     
-- name: set port description via interface override
+- name: set port <pod {{port.pod|default(1)}} leaf {{port.leaf}} fex {{port.fex|default('None')}} interface {{port.mod}}/{{port.port}}> description via interface override
   aci_rest:
     username: "{{ username }}"
     password: "{{ password }}"
