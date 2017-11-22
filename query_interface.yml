@@ -1,0 +1,15 @@
+---
+- hosts: all
+  connection: local
+  tasks:
+    - name: Get interface information
+      aci_get_interface:
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostname: "{{ inventory_hostname }}"
+        validate_certs: no
+        interface: "{{ interface }}"
+        
+    - debug:
+        msg: "Interface {{ item.interface }} has EPG {{ item.dn }} with encap {{ item.encap }} in mode {{ item.mode }}"
+      with_items: "{{ interface_epgs }}"
