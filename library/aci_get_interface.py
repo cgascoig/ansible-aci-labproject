@@ -48,20 +48,21 @@ EXAMPLES = r'''
     username: "{{ user }}"
     password: "{{ pass }}"
     protocol: "{{ protocol }}"
-    interface: "topology/pod-1/paths-122/pathep-[eth1/2]"
+    interface: "leaf-122/eth1/2
     
 - aci_get_interface:
     host: "{{ host }}"
     username: "{{ user }}"
     password: "{{ pass }}"
     protocol: "{{ protocol }}"
-    interface: "topology/pod-1/paths-122/extpaths-101/pathep-[eth1/2]"
+    interface: "pod-1/leaf-122/e101/1/2"
 '''
 
 from ansible.module_utils.aci import ACIModule, aci_argument_spec
 from ansible.module_utils.basic import AnsibleModule
 import json
 import re
+from ansible.module_utils import aci_utils
 
 
 results = {}
@@ -100,7 +101,7 @@ def main():
             supports_check_mode=True
     )
     
-    interface = module.params['interface']
+    interface = aci_utils.parse_interface(module.params['interface'])
     
     aci = ACIModule(module)
     # query_str = '/api/class/infraRsHPathAtt.json?query-target-filter=eq(infraRsHPathAtt.tDn,"{}")&target-subtree-class=relnTo'.format(interface)
